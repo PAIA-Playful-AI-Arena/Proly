@@ -1,6 +1,15 @@
 # Proly
 
+[![Unity](https://img.shields.io/badge/Unity-%23000000.svg?logo=unity&logoColor=white)](#) [![MLGame3D](https://img.shields.io/pypi/v/mlgame3d?label=MLGame3D
+)](https://pypi.org/project/mlgame3d/)
+
 Proly is a Unity-based multi-mode game that supports various gameplay styles including racing, item collection, and combat. It integrates with the MLGame3D framework, allowing AI agents to interact with the game and learn various strategies and skills.
+
+## Dlownloads
+
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.4.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.0/Proly-win32-0.4.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-0.4.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.0/Proly-darwin-universal-0.4.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-0.4.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.0/Proly-linux-0.4.0.zip)
 
 ## How to Play
 
