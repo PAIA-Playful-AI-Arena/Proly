@@ -7,9 +7,9 @@ Proly is a Unity-based multi-mode game that supports various gameplay styles inc
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.4.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.1/Proly-win32-0.4.1.zip)
-[![macOS](https://img.shields.io/badge/macOS-0.4.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.1/Proly-darwin-universal-0.4.1.zip)
-[![Linux](https://img.shields.io/badge/Linux-0.4.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.4.1/Proly-linux-0.4.1.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.5.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.5.0/Proly-win32-0.5.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-0.5.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.5.0/Proly-darwin-universal-0.5.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-0.5.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.5.0/Proly-linux-0.5.0.zip)
 
 ## How to Play
 
@@ -105,10 +105,18 @@ Proly supports various game parameters that can be set using the `-gp` option in
 - `audio`: Enables or disables game audio
   - Values: `true`/`false` or `1`/`0` (default is `true`)
   - Example: `-gp audio false` (mutes all game audio)
+- `mud_pit`: Sets the number of randomly generated mud pits
+  - Values: `0` to `3`
+  - When this parameter is not set: Uses predefined mud pits in the scene
+  - `0`: Removes all mud pits from the scene
+  - `1` to `3`: Generates the specified number of mud pits at random positions
+  - Example: `-gp mud_pit 2` (generates 2 random mud pits)
+  - Example: `-gp mud_pit 0` (removes all mud pits)
+
 
 Example of using multiple game parameters:
 ```bash
-python -m mlgame3d -i examples/simple_mlplay.py -gp checkpoint 10 -gp map 1 -gp items 1,2,3 -gp max_time 240 -gp audio false path/to/proly.exe
+python -m mlgame3d -i examples/simple_mlplay.py -gp checkpoint 10 -gp map 1 -gp items 1,2,3 -gp max_time 240 -gp mud_pit 2 -gp audio false path/to/proly.exe
 ```
 
 ### Item ID Reference
@@ -165,14 +173,23 @@ Proly provides a rich observation space, as defined in the observation_structure
 - `terrain_grid`: 5x5 grid of terrain features around the agent (Grid)
   - Each cell contains: `relative_position` (Vector2) and `terrain_type` (int)
   - Terrain types: 0: Normal, -1: Water, 1: Obstacle
+- `unpassed_checkpoints`: Information about unpassed checkpoints (List of fixed 10 items)
+  - Each checkpoint contains: `checkpoint_index` (int) and `checkpoint_position` (Vector3)
+  - Shows the next 10 checkpoints that the player hasn't passed yet
+  - If fewer than 10 unpassed checkpoints remain, remaining slots are filled with default values: checkpoint_index = -1, checkpoint_position = (0, 0, 0)
 
 ### Action Space
 
 Proly supports the following actions:
-
 - **Continuous actions**: Movement (x, z)
   - Values range from -1.0 to 1.0 for each axis
   - Represents normalized movement direction
+  - Controls acceleration rather than direct velocity:
+    - When input is applied, the agent accelerates in the specified direction
+    - When no input is applied, the agent gradually decelerates
+    - Terrain effects (like mud pits) increase friction, reducing acceleration and increasing deceleration
+    - Character rotation speed adapts based on movement velocity
+
 
 - **Discrete actions**:
   - Item selection: 0 (no action), 1 (select next item)
