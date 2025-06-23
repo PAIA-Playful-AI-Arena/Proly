@@ -7,9 +7,9 @@ Proly is a Unity-based multi-mode game that supports various gameplay styles inc
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.6.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.6.0/Proly-win32-0.6.0.zip)
-[![macOS](https://img.shields.io/badge/macOS-0.6.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.6.0/Proly-darwin-universal-0.6.0.zip)
-[![Linux](https://img.shields.io/badge/Linux-0.6.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.6.0/Proly-linux-0.6.0.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.7.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-win32-0.7.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-0.7.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-darwin-universal-0.7.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-0.7.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-linux-0.7.0.zip)
 
 ## How to Play
 
