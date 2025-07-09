@@ -3,13 +3,18 @@
 [![Unity](https://img.shields.io/badge/Unity-%23000000.svg?logo=unity&logoColor=white)](#) [![MLGame3D](https://img.shields.io/pypi/v/mlgame3d?label=MLGame3D
 )](https://pypi.org/project/mlgame3d/)
 
-Proly is a Unity-based multi-mode game that supports various gameplay styles including racing, item collection, and combat. It integrates with the MLGame3D framework, allowing AI agents to interact with the game and learn various strategies and skills.
+Proly is a Unity-based multi-mode game that supports various gameplay styles including racing and battle modes, featuring item collection and combat mechanics. The game offers two distinct modes:
+
+- **Racing Mode**: Traditional checkpoint-based racing with time-based objectives
+- **Battle Mode**: Survival-based combat without checkpoints, focusing on player elimination
+
+It integrates with the MLGame3D framework, allowing AI agents to interact with the game and learn various strategies and skills across different game modes.
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.7.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-win32-0.7.0.zip)
-[![macOS](https://img.shields.io/badge/macOS-0.7.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-darwin-universal-0.7.0.zip)
-[![Linux](https://img.shields.io/badge/Linux-0.7.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.7.0/Proly-linux-0.7.0.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.8.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-win32-0.8.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-0.8.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-darwin-universal-0.8.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-0.8.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-linux-0.8.0.zip)
 
 ## How to Play
 
@@ -46,8 +51,10 @@ Proly supports up to 4 players simultaneously with the following control schemes
 
 ### Game Rules
 
+#### Racing Mode (Default)
+
 - **Main Objectives**:
-  - Complete the race in the shortest time
+  - Complete the race in the shortest time by passing through all checkpoints
 
 - **Items**:
   - Each player can hold up to 3 items simultaneously
@@ -59,6 +66,23 @@ Proly supports up to 4 players simultaneously with the following control schemes
   - Being hit by attacks: Lose HP or trigger abnormal status
   - Interactive scenes: Negative effects triggered by active or passive mechanisms
   - Time penalty: 10-second countdown after the first player completes the course
+
+#### Battle Mode
+
+- **Main Objectives**:
+  - Survive as long as possible while eliminating other players
+  - Last player standing wins
+
+- **Key Differences from Racing Mode**:
+  - No checkpoints - pure survival-based gameplay
+  - Players have double the health compared to racing mode
+  - Rankings are determined by survival time and elimination order
+  - Game ends when only one player remains or time runs out
+
+- **Survival Mechanics**:
+  - Players are eliminated when their health reaches zero
+  - Survival time is continuously tracked for all players
+  - Final rankings consider both elimination order and remaining health
 
 ## Integration with MLGame3D
 
@@ -85,8 +109,14 @@ Proly can be integrated with the MLGame3D framework, allowing AI agents to inter
 
 Proly supports various game parameters that can be set using the `-gp` option in MLGame3D:
 
+- `mode`: Sets the game mode
+  - Values: `racing` (default), `battle`
+  - `racing`: Traditional checkpoint-based racing mode
+  - `battle`: Survival-based combat mode without checkpoints
+  - Example: `-gp mode battle`
+
 - `map`: Sets the map scene to load by build index
-  - Values: `0` (Island, default), `1` (Atoll)
+  - Values: `0` (Island, default), `1` (Atoll), `2` (Huge Island), `3` (Pothole)
   - Example: `-gp map 1` (loads the Atoll map)
 
 - `checkpoint`: Sets the number of checkpoints to generate
@@ -116,7 +146,11 @@ Proly supports various game parameters that can be set using the `-gp` option in
 
 Example of using multiple game parameters:
 ```bash
-python -m mlgame3d -i examples/simple_mlplay.py -gp checkpoint 10 -gp map 1 -gp items 1,2,3 -gp max_time 240 -gp mud_pit 2 -gp audio false path/to/proly.exe
+# Racing mode with custom settings
+python -m mlgame3d -i examples/simple_mlplay.py -gp mode racing -gp checkpoint 10 -gp map 1 -gp items 1,2,3 -gp max_time 240 -gp mud_pit 2 -gp audio false path/to/proly.exe
+
+# Battle mode example
+python -m mlgame3d -i examples/simple_mlplay.py -gp mode battle -gp map 0 -gp items 3,4,5 -gp max_time 300 -gp mud_pit 1 path/to/proly.exe
 ```
 
 ### Item ID Reference
@@ -150,6 +184,8 @@ python -m mlgame3d -gp items 0 path/to/proly.exe
 Proly provides a rich observation space, as defined in the observation_structure.json file. The key observations include:
 
 - `target_position`: Position of the next checkpoint (Vector3)
+  - In Racing Mode: Points to the next checkpoint to reach
+  - In Battle Mode: Set to (0, 0, 0) as there are no checkpoints
 - `agent_position`: Current position of the agent (Vector3)
 - `agent_forward_direction`: Current forward direction of the agent (Vector2, x and z)
 - `agent_velocity`: Current velocity of the agent (Vector2, x and z)
@@ -168,15 +204,25 @@ Proly provides a rich observation space, as defined in the observation_structure
   - Each object contains: `relative_position` (Vector2) and `object_type` (int)
   - Object types: 1: MudPit, 2: Bomb, 3: Shuriken
 - `other_players`: Information about other players (List of up to 3 players)
-  - Each player contains: `relative_position` (Vector3) and `relative_velocity` (Vector3)
-  - When the player is hidden, default values are: relative_position (0, -10, 0) and relative_velocity (0, 0, 0)
+  - The list contains information about other players in order, skipping the current player
+  - For example, if current player is Player 2, the list will contain Player 1, Player 3, Player 4 in that order
+  - Each player contains:
+    - `relative_position` (Vector3): Relative position to other player
+    - `relative_velocity` (Vector3): Relative velocity to other player
+    - `health` (float): Current health of the other player
+    - `health_normalized` (float): Current health of the other player normalized to [0, 1]
+    - `inventory_item_count` (int): Number of items in the other player's inventory
+    - `inventory_items` (List of up to 3 items): Items in the other player's inventory, each containing `item_id` (int)
+    - `selected_item_index` (int): Index of the currently selected item, -1 if none
+  - When the player is hidden, default values are used: relative_position (0, -10, 0), relative_velocity (0, 0, 0), health (0), etc.
 - `terrain_grid`: 5x5 grid of terrain features around the agent (Grid)
   - Each cell contains: `relative_position` (Vector2) and `terrain_type` (int)
   - Terrain types: 0: Normal, -1: Water, 1: Obstacle
 - `unpassed_checkpoints`: Information about unpassed checkpoints (List of fixed 10 items)
   - Each checkpoint contains: `checkpoint_index` (int) and `checkpoint_position` (Vector3)
-  - Shows the next 10 checkpoints that the player hasn't passed yet
-  - If fewer than 10 unpassed checkpoints remain, remaining slots are filled with default values: checkpoint_index = -1, checkpoint_position = (0, 0, 0)
+  - In Racing Mode: Shows the next 10 checkpoints that the player hasn't passed yet
+  - In Battle Mode: All slots are filled with default values: checkpoint_index = -1, checkpoint_position = (0, 0, 0)
+  - If fewer than 10 unpassed checkpoints remain, remaining slots are filled with default values
 
 ### Action Space
 
