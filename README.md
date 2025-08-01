@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0.8.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-win32-0.8.0.zip)
-[![macOS](https://img.shields.io/badge/macOS-0.8.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-darwin-universal-0.8.0.zip)
-[![Linux](https://img.shields.io/badge/Linux-0.8.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/0.8.0/Proly-linux-0.8.0.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.0.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.0/Proly-win32-1.0.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.0.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.0/Proly-darwin-universal-1.0.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.0.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.0/Proly-linux-1.0.0.zip)
 
 ## How to Play
 
@@ -55,6 +55,7 @@ Proly supports up to 4 players simultaneously with the following control schemes
 
 - **Main Objectives**:
   - Complete the race in the shortest time by passing through all checkpoints
+  - The game has a default maximum time limit, but will end 10 seconds after any player reaches the final checkpoint
 
 - **Items**:
   - Each player can hold up to 3 items simultaneously
@@ -65,7 +66,7 @@ Proly supports up to 4 players simultaneously with the following control schemes
 - **Penalty Mechanisms**:
   - Being hit by attacks: Lose HP or trigger abnormal status
   - Interactive scenes: Negative effects triggered by active or passive mechanisms
-  - Time penalty: 10-second countdown after the first player completes the course
+  - Death penalty: Dead players respawn at the last checkpoint passed or the original spawn point, unable to move during respawn period
 
 #### Battle Mode
 
@@ -116,8 +117,8 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - Example: `-gp mode battle`
 
 - `map`: Sets the map scene to load by build index
-  - Values: `0` (Island, default), `1` (Atoll), `2` (Huge Island), `3` (Pothole)
-  - Example: `-gp map 1` (loads the Atoll map)
+  - Values: `0` (Island, default), `1` (S-shaped Island), `2` (V-shaped Island), `3` (Pothole Island)
+  - Example: `-gp map 2` (loads the V-shaped Island)
 
 - `checkpoint`: Sets the number of checkpoints to generate
   - Values: Any positive integer
@@ -198,9 +199,9 @@ Proly provides a rich observation space, as defined in the observation_structure
 - `inventory_items`: List of items in the agent's inventory (List of up to 3 items)
   - Each item contains: `item_id` (int)
 - `selected_item_index`: Index of the currently selected item, -1 if none (int)
-- `nearby_items`: Information about nearby items (List of up to 5 items)
+- `nearby_items`: Information about nearby items (List of up to 5 items, sorted by distance from nearest to farthest)
   - Each item contains: `relative_position` (Vector2) and `item_id` (int)
-- `nearby_map_objects`: Information about nearby map objects (List of up to 5 objects)
+- `nearby_map_objects`: Information about nearby map objects (List of up to 5 objects, sorted by distance from nearest to farthest)
   - Each object contains: `relative_position` (Vector2) and `object_type` (int)
   - Object types: 1: MudPit, 2: Bomb, 3: Shuriken
 - `other_players`: Information about other players (List of up to 3 players)
