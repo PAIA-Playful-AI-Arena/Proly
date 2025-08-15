@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.0.2-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.2/Proly-win32-1.0.2.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.0.2-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.2/Proly-darwin-universal-1.0.2.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.0.2-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.0.2/Proly-linux-1.0.2.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.1.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.1.0/Proly-win32-1.1.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.1.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.1.0/Proly-darwin-universal-1.1.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.1.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.1.0/Proly-linux-1.1.0.zip)
 
 ## How to Play
 
@@ -192,7 +192,9 @@ Proly provides a rich observation space, as defined in the observation_structure
 - `agent_velocity`: Current velocity of the agent (Vector2, x and z)
 - `agent_health`: Current health of the agent (float)
 - `agent_health_normalized`: Current health normalized to [0, 1] (float)
+- `is_respawning`: Whether the player is currently respawning (bool)
 - `last_checkpoint_index`: Index of the last checkpoint passed (int)
+- `reached_final_checkpoint`: Whether the player has reached the final checkpoint (bool)
 - `current_time`: Current time in the episode (float)
 - `current_time_normalized`: Current time normalized to [0, 1] based on maximum time (float)
 - `inventory_item_count`: Number of items in the agent's inventory (int)
