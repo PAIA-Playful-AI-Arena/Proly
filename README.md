@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.2.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.0/Proly-win32-1.2.0.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.2.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.0/Proly-darwin-universal-1.2.0.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.2.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.0/Proly-linux-1.2.0.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.2.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.1/Proly-win32-1.2.1.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.2.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.1/Proly-darwin-universal-1.2.1.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.2.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.2.1/Proly-linux-1.2.1.zip)
 
 ## How to Play
 
@@ -201,6 +201,7 @@ Proly provides a rich observation space, as defined in the observation_structure
 - `inventory_items`: List of items in the agent's inventory (List of up to 3 items)
   - Each item contains: `item_id` (int)
 - `selected_item_index`: Index of the currently selected item, -1 if none (int)
+- `selected_item_id`: ID of the currently selected item (0 if no item is selected)
 - `nearby_items`: Information about nearby items (List of up to 5 items, sorted by distance from nearest to farthest)
   - Each item contains: `relative_position` (Vector2) and `item_id` (int)
 - `nearby_map_objects`: Information about nearby map objects (List of up to 5 objects, sorted by distance from nearest to farthest)
@@ -217,6 +218,7 @@ Proly provides a rich observation space, as defined in the observation_structure
     - `inventory_item_count` (int): Number of items in the other player's inventory
     - `inventory_items` (List of up to 3 items): Items in the other player's inventory, each containing `item_id` (int)
     - `selected_item_index` (int): Index of the currently selected item, -1 if none
+    - `selected_item_id` (int): ID of the currently selected item (0 if no item is selected)
   - When the player is hidden, default values are used: relative_position (0, -10, 0), relative_velocity (0, 0, 0), health (0), etc.
 - `terrain_grid`: 5x5 grid of terrain features around the agent (Grid)
   - Each cell contains: `relative_position` (Vector2) and `terrain_type` (int)
@@ -238,7 +240,6 @@ Proly supports the following actions:
     - When no input is applied, the agent gradually decelerates
     - Terrain effects (like mud pits) increase friction, reducing acceleration and increasing deceleration
     - Character rotation speed adapts based on movement velocity
-
 
 - **Discrete actions**:
   - Item selection: 0 (no action), 1 (select next item)
