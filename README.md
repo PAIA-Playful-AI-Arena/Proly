@@ -185,9 +185,9 @@ python -m mlgame3d -gp items 0 path/to/proly.exe
 
 Proly provides a rich observation space, as defined in the observation_structure.json file. The key observations include:
 
-- `target_position`: Position of the next checkpoint (Vector3)
+- `target_position`: Relative position of the next checkpoint (Vector2)
   - In Racing Mode: Points to the next checkpoint to reach
-  - In Battle Mode: Set to (0, 0, 0) as there are no checkpoints
+  - In Battle Mode: Set to (0, 0) as there are no checkpoints
 - `agent_position`: Current position of the agent (Vector3)
 - `agent_forward_direction`: Current forward direction of the agent (Vector2, x and z)
 - `agent_velocity`: Current velocity of the agent (Vector2, x and z)
