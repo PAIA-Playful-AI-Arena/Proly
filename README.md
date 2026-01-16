@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.3.2-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.3.2/Proly-win32-1.3.2.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.3.2-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.3.2/Proly-darwin-universal-1.3.2.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.3.2-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.3.2/Proly-linux-1.3.2.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-win32-1.4.0-beta.1.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-darwin-universal-1.4.0-beta.1.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-linux-1.4.0-beta.1.zip)
 
 ## How to Play
 
@@ -86,6 +86,24 @@ Proly supports up to 4 players simultaneously with the following control schemes
   - Survival time is continuously tracked for all players
   - Final rankings consider both elimination order and remaining health
 
+## Command Line Arguments
+
+When running the game executable directly, you can use the following command line arguments:
+
+- `--editor`: Opens the map editor instead of starting the game
+  - Windows: `Proly.exe --editor`
+  - macOS: `open Proly.app --args --editor`
+
+- `--replay <filename>`: Starts replay playback of a recorded game
+  - Values: Any valid replay filename (`.replay` extension is automatically added if not specified)
+  - The file is first searched relative to the current working directory, then in the default Replays folder
+  - Default Replays folder locations:
+    - Windows: `C:\Users\<username>\AppData\LocalLow\<companyname>\Proly\Replays`
+    - macOS: `~/Library/Application Support/<companyname>/Proly/Replays`
+    - Linux: `~/.config/unity3d/<companyname>/Proly/Replays`
+  - Windows: `Proly.exe --replay my_game`
+  - macOS: `open Proly.app --args --replay my_game`
+
 ## Integration with MLGame3D
 
 Proly can be integrated with the MLGame3D framework, allowing AI agents to interact with the game.
@@ -121,6 +139,11 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - Values: `0` (Island, default), `1` (S-shaped Island), `2` (V-shaped Island), `3` (2-hole Island), `4` (Pothole Island)
   - Example: `-gp map 2` (loads the V-shaped Island)
 
+- `map_file`: Loads a custom map from a JSON file exported by the map editor
+  - Values: Path to a `.json` map file
+  - Takes precedence over the `map` parameter when set
+  - Example: `-gp map_file my_custom_map.json`
+
 - `checkpoint`: Sets the number of checkpoints to generate
   - Values: Any positive integer
   - Note: When this parameter is set, checkpoint mode is automatically set to "random"
@@ -144,6 +167,16 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - `1` to `3`: Generates the specified number of mud pits at random positions
   - Example: `-gp mud_pit 2` (generates 2 random mud pits)
   - Example: `-gp mud_pit 0` (removes all mud pits)
+
+- `record`: Sets the filename for recording gameplay to a replay file
+  - Values: Any valid filename (`.replay` extension is automatically added if not specified)
+  - The replay file will be saved relative to the current working directory; if the path is invalid, it falls back to the default Replays folder
+  - Default Replays folder locations:
+    - Windows: `C:\Users\<username>\AppData\LocalLow\<companyname>\Proly\Replays`
+    - macOS: `~/Library/Application Support/<companyname>/Proly/Replays`
+    - Linux: `~/.config/unity3d/<companyname>/Proly/Replays`
+  - Example: `-gp record my_game` (saves replay to `my_game.replay`)
+  - Example: `-gp record test.replay` (saves replay to `test.replay`)
 
 
 Example of using multiple game parameters:
