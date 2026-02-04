@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-win32-1.4.0-beta.1.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-darwin-universal-1.4.0-beta.1.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.1/Proly-linux-1.4.0-beta.1.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.2-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-win32-1.4.0-beta.2.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.2-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-darwin-universal-1.4.0-beta.2.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.2-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-linux-1.4.0-beta.2.zip)
 
 ## How to Play
 
