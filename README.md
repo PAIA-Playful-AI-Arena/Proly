@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.2-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-win32-1.4.0-beta.2.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.2-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-darwin-universal-1.4.0-beta.2.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.2-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.2/Proly-linux-1.4.0-beta.2.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.3-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-win32-1.4.0-beta.3.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.3-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-darwin-universal-1.4.0-beta.3.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.3-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-linux-1.4.0-beta.3.zip)
 
 ## How to Play
 
@@ -91,7 +91,7 @@ Proly supports up to 4 players simultaneously with the following control schemes
 When running the game executable directly, you can use the following command line arguments:
 
 - `--editor`: Opens the map editor instead of starting the game
-  - Windows: `Proly.exe --editor`
+  - Windows: `proly.exe --editor`
   - macOS: `open Proly.app --args --editor`
 
 - `--replay <filename>`: Starts replay playback of a recorded game
@@ -101,8 +101,28 @@ When running the game executable directly, you can use the following command lin
     - Windows: `C:\Users\<username>\AppData\LocalLow\<companyname>\Proly\Replays`
     - macOS: `~/Library/Application Support/<companyname>/Proly/Replays`
     - Linux: `~/.config/unity3d/<companyname>/Proly/Replays`
-  - Windows: `Proly.exe --replay my_game`
+  - Windows: `proly.exe --replay my_game`
   - macOS: `open Proly.app --args --replay my_game`
+
+- `--replay-stream <source>`: Starts incremental replay playback from a local directory or remote URL
+  - Values: A local directory path or an HTTP(S) URL pointing to the streaming session
+  - The source must contain a `manifest.json` and the corresponding segment files
+  - Supports live streaming: if the session is still being recorded (`isLive: true` in manifest), the player will poll for new segments automatically
+  - Windows: `proly.exe --replay-stream C:\path\to\session`
+  - macOS: `open Proly.app --args --replay-stream https://example.com/replays/session`
+
+### Web URL Parameters
+
+When running as a Web build (WebGPU with WebGL2 fallback), replay playback can be triggered via URL query parameters:
+
+- `?replay=<url>`: Downloads a `.replay` file from the URL and starts playback
+  - Example: `https://your-game.com/index.html?replay=https://example.com/replays/my_game.replay`
+
+- `?stream=<url>` or `?live=<url>`: Starts incremental replay playback from a remote URL
+  - The URL should point to the directory containing `manifest.json` and segment files
+  - `stream` and `live` are interchangeable and behave identically
+  - Example: `https://your-game.com/index.html?stream=https://example.com/replays/my_session`
+  - Example: `https://your-game.com/index.html?live=https://example.com/replays/my_session`
 
 ## Integration with MLGame3D
 
@@ -178,14 +198,25 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - Example: `-gp record my_game` (saves replay to `my_game.replay`)
   - Example: `-gp record test.replay` (saves replay to `test.replay`)
 
+- `stream`: Enables incremental streaming recording, saving replay data as segmented files for live or on-demand playback
+  - Values: Directory name for the streaming output
+  - Segments are written progressively during gameplay, enabling live streaming scenarios
+  - The streaming directory will be created under the default Replays folder
+  - Can be used together with `record` to simultaneously produce both a single replay file and streaming segments
+  - When used without `record`, only streaming segments are produced (no single `.replay` file)
+  - Example: `-gp stream my_session` (saves segments to `Replays/my_session/`)
+  - Example: `-gp record my_game -gp stream my_session` (saves both formats)
 
 Example of using multiple game parameters:
 ```bash
 # Racing mode with custom settings
 python -m mlgame3d -i examples/simple_mlplay.py -gp mode racing -gp checkpoint 10 -gp map 1 -gp items 1,2,3 -gp max_time 240 -gp mud_pit 2 -gp audio false path/to/proly.exe
 
-# Battle mode example
-python -m mlgame3d -i examples/simple_mlplay.py -gp mode battle -gp map 0 -gp items 3,4,5 -gp max_time 300 -gp mud_pit 1 path/to/proly.exe
+# Battle mode with streaming enabled
+python -m mlgame3d -i examples/simple_mlplay.py -gp mode battle -gp map 0 -gp stream my_session path/to/proly.exe
+
+# Record both single replay and streaming segments
+python -m mlgame3d -i examples/simple_mlplay.py -gp record my_game -gp stream my_session path/to/proly.exe
 ```
 
 ### Item ID Reference
