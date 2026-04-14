@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0--beta.3-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-win32-1.4.0-beta.3.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.4.0--beta.3-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-darwin-universal-1.4.0-beta.3.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.4.0--beta.3-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0-beta.3/Proly-linux-1.4.0-beta.3.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-win32-1.4.0.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-darwin-universal-1.4.0.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-linux-1.4.0.zip)
 
 ## How to Play
 
@@ -49,6 +49,7 @@ Proly supports up to 4 players simultaneously with the following control schemes
 - **F1**: Toggle player position display on/off
 - **F2**: Toggle FPS display on/off
 - **F3**: Pause the game
+- **F4**: Toggle free roam camera mode (mouse drag to pan, scroll wheel to zoom)
 
 ### Game Rules
 
@@ -165,9 +166,15 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - Example: `-gp map_file my_custom_map.json`
 
 - `checkpoint`: Sets the number of checkpoints to generate
-  - Values: Any positive integer
-  - Note: When this parameter is set, checkpoint mode is automatically set to "random"
+  - Values: `1` to `20` (default: `5`)
+  - The actual number generated is the lesser of this value and the number of checkpoints placed on the map
   - Example: `-gp checkpoint 10`
+
+- `checkpoint_random`: Sets the checkpoint selection method
+  - Values: `true` (default), `false`
+  - `true`: At the start of each game, randomly selects `checkpoint` checkpoints from all checkpoints on the map
+  - `false`: Selects the first `checkpoint` checkpoints in the order they are placed on the map
+  - Example: `-gp checkpoint_random false` (uses checkpoints in fixed order)
 
 - `items`: Filters which items can appear in the game
   - Values: List of item IDs (empty list means all items are available)
@@ -288,6 +295,8 @@ Proly provides a rich observation space, as defined in the observation_structure
 - `terrain_grid`: 5x5 grid of terrain features around the agent (Grid)
   - Each cell contains: `relative_position` (Vector2) and `terrain_type` (int)
   - Terrain types: 0: Normal, -1: Water, 1: Obstacle
+- `directional_terrain`: Nearest special terrain in 8 directions (N, NE, E, SE, S, SW, W, NW)
+  - Each direction contains: `terrain_type` (int: 0=None, -1=Water, 1=Obstacle) and `distance` (float, distance in world units, max 10)
 - `unpassed_checkpoints`: Information about unpassed checkpoints (List of fixed 10 items)
   - Each checkpoint contains: `checkpoint_index` (int) and `checkpoint_position` (Vector3)
   - In Racing Mode: Shows the next 10 checkpoints that the player hasn't passed yet
