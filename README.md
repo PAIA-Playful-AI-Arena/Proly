@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.0-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-win32-1.4.0.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.4.0-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-darwin-universal-1.4.0.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.4.0-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.0/Proly-linux-1.4.0.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-win32-1.4.1.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-darwin-universal-1.4.1.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-linux-1.4.1.zip)
 
 ## How to Play
 
@@ -50,6 +50,12 @@ Proly supports up to 4 players simultaneously with the following control schemes
 - **F2**: Toggle FPS display on/off
 - **F3**: Pause the game
 - **F4**: Toggle free roam camera mode (mouse drag to pan, scroll wheel to zoom)
+- **F5**: Cycle player observation range debugger (off, then each active player)
+  - Blue-violet circle: item and map object detection radius
+  - Terrain grid cells: ochre = normal, cyan = water, red = obstacle
+  - 8-directional terrain rays: ochre = normal, cyan = water, red = obstacle; rays stop at the detected terrain
+  - Bright lime rings: detected pickup items (the nearest item has the smallest, most opaque ring; farther items get progressively larger and more transparent rings)
+  - Purple-violet rings: detected map objects (same convention — smaller and more opaque means nearer)
 
 ### Game Rules
 
