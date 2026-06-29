@@ -12,9 +12,9 @@ It integrates with the MLGame3D framework, allowing AI agents to interact with t
 
 ## Downloads
 
-[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.1-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-win32-1.4.1.zip)
-[![macOS](https://img.shields.io/badge/macOS-1.4.1-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-darwin-universal-1.4.1.zip)
-[![Linux](https://img.shields.io/badge/Linux-1.4.1-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.1/Proly-linux-1.4.1.zip)
+[![Windows](https://custom-icon-badges.demolab.com/badge/Windows-1.4.2-blue?logo=windows)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.2/Proly-win32-1.4.2.zip)
+[![macOS](https://img.shields.io/badge/macOS-1.4.2-red?logo=apple)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.2/Proly-darwin-universal-1.4.2.zip)
+[![Linux](https://img.shields.io/badge/Linux-1.4.2-green?logo=linux)](https://github.com/PAIA-Playful-AI-Arena/Proly/releases/download/1.4.2/Proly-linux-1.4.2.zip)
 
 ## How to Play
 
@@ -177,7 +177,7 @@ Proly supports various game parameters that can be set using the `-gp` option in
   - Example: `-gp checkpoint 10`
 
 - `checkpoint_random`: Sets the checkpoint selection method
-  - Values: `true` (default), `false`
+  - Values: `true`, `false` (default)
   - `true`: At the start of each game, randomly selects `checkpoint` checkpoints from all checkpoints on the map
   - `false`: Selects the first `checkpoint` checkpoints in the order they are placed on the map
   - Example: `-gp checkpoint_random false` (uses checkpoints in fixed order)
@@ -185,6 +185,15 @@ Proly supports various game parameters that can be set using the `-gp` option in
 - `items`: Filters which items can appear in the game
   - Values: List of item IDs (empty list means all items are available)
   - Example: `-gp items 1,2,3`
+
+- `item_interval`: Sets the time interval between item spawns in seconds
+  - Values: `1` to `60` (default: `5`)
+  - Example: `-gp item_interval 10` (spawns an item every 10 seconds)
+
+- `item_init`: Pre-spawns items at all spawn points when the game starts
+  - Values: `true`/`false` or `1`/`0` (default is `false`)
+  - When `true`, every spawn point starts with an item already placed
+  - Example: `-gp item_init true`
 
 - `max_time`: Sets the maximum time limit for each game in seconds
   - Values: Any positive number (default is 180 seconds / 3 minutes)
